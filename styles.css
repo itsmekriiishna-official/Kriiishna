@@ -388,9 +388,18 @@ body {
 
 /* Bento Grid Layout */
 .bento-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.bento-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
 }
 
 .bento-card {
@@ -410,28 +419,24 @@ body {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
 }
 
-.card-wide {
-  grid-column: span 2;
-}
-
 .card-image-wrap {
   width: 100%;
   overflow: hidden;
   background: #F0EEE9;
-  aspect-ratio: 16 / 9;
-}
-
-.dumpling-card .card-image-wrap,
-.snack-card .card-image-wrap,
-.desk-photo-card .card-image-wrap {
-  aspect-ratio: 4 / 3;
 }
 
 .card-image-wrap img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  display: block;
   object-fit: cover;
   transition: transform 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    flex-direction: column;
+  }
 }
 
 .bento-card:hover .card-image-wrap img {
