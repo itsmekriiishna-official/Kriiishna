@@ -1,4 +1,31 @@
-﻿const track = document.querySelector('#carousel-track');
+﻿import '../assets/figma-home/lottie.min.js';
+import logoData from '../assets/figma-home/rachel-logo.json';
+
+const logoContainer = document.querySelector('#brand-animation');
+const logoFallback = document.querySelector('#brand-fallback');
+const logoPlayedKey = 'rh-logo-played';
+if (logoContainer && logoFallback && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  try {
+    if (!sessionStorage.getItem(logoPlayedKey) && window.lottie) {
+      sessionStorage.setItem(logoPlayedKey, '1');
+      const logoAnimation = window.lottie.loadAnimation({
+        container: logoContainer,
+        renderer: 'svg',
+        loop: false,
+        autoplay: false,
+        animationData: logoData,
+      });
+      logoAnimation.addEventListener('DOMLoaded', () => {
+        logoFallback.hidden = true;
+        logoAnimation.play();
+      });
+      logoAnimation.addEventListener('data_failed', () => { logoFallback.hidden = false; });
+    }
+  } catch {
+    logoFallback.hidden = false;
+  }
+}
+const track = document.querySelector('#carousel-track');
 const gallery = document.querySelector('.photo-gallery');
 const slides = [...track.querySelectorAll('img')];
 const dots = [...document.querySelectorAll('.carousel-dots button')];
@@ -66,4 +93,5 @@ const updateClock = () => {
 };
 updateClock();
 setInterval(updateClock, 1000);
+
 
