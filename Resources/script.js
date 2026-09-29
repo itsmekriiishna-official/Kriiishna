@@ -29,16 +29,32 @@ updateClock();
 window.setInterval(updateClock, 1000);
 
 const tabs = [...document.querySelectorAll('.resource-tab')];
-const panels = [...document.querySelectorAll('.resource-panel')];
+const cards = [...document.querySelectorAll('.featured-card')];
+const resourceBackground = document.querySelector('.resources-atmosphere img');
 function selectTab(tab) {
-  const selected = tab.dataset.tab;
+  const archive = tab.dataset.tab === 'archive';
   tabs.forEach((item) => {
     const active = item === tab;
     item.classList.toggle('is-active', active);
     item.setAttribute('aria-selected', String(active));
     item.tabIndex = active ? 0 : -1;
   });
-  panels.forEach((panel) => { panel.hidden = panel.dataset.panel !== selected; });
+  document.body.dataset.resourceView = archive ? 'archive' : 'resources';
+  if (resourceBackground) resourceBackground.src = archive ? resourceBackground.dataset.archiveBackground : resourceBackground.dataset.resourceBackground;
+  cards.forEach((card) => {
+    const title = card.querySelector('.featured-title');
+    const image = card.querySelector('.featured-cover');
+    const nextTitle = archive ? card.dataset.archiveTitle : card.dataset.resourceTitle;
+    const nextImage = archive ? card.dataset.archiveImage : card.dataset.resourceImage;
+    if (title) title.textContent = nextTitle;
+    if (image) {
+      image.src = `../assets/resources/${nextImage}`;
+      image.alt = `${nextTitle} preview`;
+    }
+    card.href = archive ? card.dataset.archiveHref : card.dataset.resourceHref;
+  });
+  const panel = document.querySelector('#resources-panel');
+  if (panel) panel.setAttribute('aria-labelledby', tab.id);
 }
 tabs.forEach((tab, index) => {
   tab.addEventListener('click', () => selectTab(tab));
