@@ -1,5 +1,5 @@
-﻿import '../assets/home-screen/lottie.min.js';
-import logoData from '../assets/home-screen/rachel-logo.json';
+import '../assets/home-screen/animations/lottie.min.js';
+import logoData from '../assets/home-screen/animations/rachel-logo.json';
 
 const logoContainer = document.querySelector('#brand-animation');
 const logoFallback = document.querySelector('#brand-fallback');

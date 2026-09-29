@@ -1,4 +1,4 @@
-﻿const menuToggle = document.querySelector('.menu-toggle');
+const menuToggle = document.querySelector('.menu-toggle');
 const mobileNavigation = document.querySelector('#mobile-navigation');
 function setMenuOpen(open) {
   if (!menuToggle || !mobileNavigation) return;
@@ -30,7 +30,11 @@ window.setInterval(updateClock, 1000);
 
 const tabs = [...document.querySelectorAll('.resource-tab')];
 const cards = [...document.querySelectorAll('.featured-card')];
-const resourceBackground = document.querySelector('.resources-atmosphere img');
+const resourceImageUrls = typeof import.meta.glob === 'function'
+  ? import.meta.glob('./assets/images/*.{png,webp}', { eager: true, query: '?url', import: 'default' })
+  : null;
+const resourceImageUrl = (fileName) =>
+  resourceImageUrls?.['./assets/images/' + fileName] ?? './assets/images/' + fileName;
 function selectTab(tab) {
   const archive = tab.dataset.tab === 'archive';
   tabs.forEach((item) => {
@@ -40,7 +44,7 @@ function selectTab(tab) {
     item.tabIndex = active ? 0 : -1;
   });
   document.body.dataset.resourceView = archive ? 'archive' : 'resources';
-  if (resourceBackground) resourceBackground.src = archive ? resourceBackground.dataset.archiveBackground : resourceBackground.dataset.resourceBackground;
+  if (resourceBackground) resourceBackground.src = resourceImageUrl(archive ? resourceBackground.dataset.archiveBackground : resourceBackground.dataset.resourceBackground);
   cards.forEach((card) => {
     const title = card.querySelector('.featured-title');
     const image = card.querySelector('.featured-cover');
@@ -48,7 +52,7 @@ function selectTab(tab) {
     const nextImage = archive ? card.dataset.archiveImage : card.dataset.resourceImage;
     if (title) title.textContent = nextTitle;
     if (image) {
-      image.src = `../assets/resources/${nextImage}`;
+      image.src = resourceImageUrl(nextImage);
       image.alt = `${nextTitle} preview`;
     }
     card.href = archive ? card.dataset.archiveHref : card.dataset.resourceHref;
