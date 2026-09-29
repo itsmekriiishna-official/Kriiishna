@@ -1,5 +1,5 @@
-﻿import '../assets/figma-home/lottie.min.js';
-import logoData from '../assets/figma-home/rachel-logo.json';
+﻿import '../assets/home-screen/lottie.min.js';
+import logoData from '../assets/home-screen/rachel-logo.json';
 
 const logoContainer = document.querySelector('#brand-animation');
 const logoFallback = document.querySelector('#brand-fallback');
@@ -64,6 +64,9 @@ gallery.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowLeft') selectSlide(activeSlide - 1);
 });
 selectSlide(activeSlide);
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!prefersReducedMotion) setInterval(() => selectSlide(activeSlide + 1), 5000);
 
 function setMenuOpen(open) {
   menuToggle.classList.toggle('is-open', open);
