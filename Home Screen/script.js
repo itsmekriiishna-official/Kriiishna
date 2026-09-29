@@ -81,15 +81,14 @@ mobileNavigation.addEventListener('click', (event) => {
 });
 
 const clock = document.querySelector('#local-time');
+const localClockFormatter = new Intl.DateTimeFormat(undefined, {
+  hour: 'numeric',
+  minute: '2-digit',
+  second: '2-digit',
+  timeZoneName: 'short',
+});
 const updateClock = () => {
-  const value = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Kuala_Lumpur',
-    hour: 'numeric',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true,
-  }).format(new Date());
-  clock.textContent = `${value} MYT`;
+  if (clock) clock.textContent = localClockFormatter.format(new Date());
 };
 updateClock();
 setInterval(updateClock, 1000);
