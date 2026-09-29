@@ -80,15 +80,21 @@ mobileNavigation.addEventListener('click', (event) => {
   if (event.target.closest('a')) setMenuOpen(false);
 });
 
-const clock = document.querySelector('#local-time');
-const localClockFormatter = new Intl.DateTimeFormat(undefined, {
+const clockValue = document.querySelector('#local-time .local-clock-value');
+const clockZone = document.querySelector('#local-time .local-clock-zone');
+const localTimeFormatter = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric',
   minute: '2-digit',
   second: '2-digit',
-  timeZoneName: 'short',
+  hour12: true,
+});
+const localZoneFormatter = new Intl.DateTimeFormat(undefined, {
+  timeZoneName: 'shortOffset',
 });
 const updateClock = () => {
-  if (clock) clock.textContent = localClockFormatter.format(new Date());
+  const now = new Date();
+  if (clockValue) clockValue.textContent = localTimeFormatter.format(now);
+  if (clockZone) clockZone.textContent = localZoneFormatter.formatToParts(now).find((part) => part.type === 'timeZoneName')?.value ?? '';
 };
 updateClock();
 setInterval(updateClock, 1000);

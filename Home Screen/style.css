@@ -70,7 +70,7 @@ body {
 .nav-link.current { color: #222227; font-weight: 600; }
 .nav-link.nav-spaced { margin-top: 8px; }
 .sidebar-bottom { display: flex; width: 152px; flex: 1; flex-direction: column; justify-content: flex-end; }
-.local-time { color: rgba(34, 34, 39, .44); font-size: 13px; line-height: 19.5px; letter-spacing: -.076px; white-space: nowrap; }
+.local-time { display: flex; width: 152px; align-items: baseline; gap: 7px; color: rgba(34, 34, 39, .44); font-size: 12px; line-height: 19.5px; letter-spacing: -.076px; white-space: nowrap; }
 .social-links { display: flex; height: 28px; align-items: center; gap: 12px; padding-top: 10px; }
 .social-links a { display: flex; width: 18px; height: 18px; align-items: center; justify-content: center; opacity: .55; transition: transform 200ms; }
 .social-links a:hover, .social-links a:focus-visible { transform: scale(1.1); }
